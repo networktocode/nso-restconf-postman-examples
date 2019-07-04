@@ -1,0 +1,822 @@
+{
+	"info": {
+		"_postman_id": "7a75688a-c7cb-4175-a368-6272f4d49701",
+		"name": "NSO RESTCONF NORTHBOUND API",
+		"description": "using https://github.com/NSO-developer/nso-vagrant\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NSO Application Related Queries",
+			"item": [
+				{
+					"name": "Root Level NSO JSON Returned",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/yang-data+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf",
+							"protocol": "http",
+							"host": [
+								"{{NSO_IP}}"
+							],
+							"port": "{{NSO_HTTP_PORT}}",
+							"path": [
+								"restconf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Root Level NSO XML returned",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/yang-data+xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8009/restconf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8009",
+							"path": [
+								"restconf"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "note it has different headers for root level",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8a5ad088-3937-4264-86ad-472f9860600e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "188a5771-439a-446d-93e4-b7228a69596b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "NSO Device Manager",
+			"item": [
+				{
+					"name": "Adding / Removing a Device",
+					"item": [
+						{
+							"name": "Create a Device in the CDB",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/yang-data+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n               <device >\n                 <name>netsim-ios-0</name>\n                 <address>127.0.0.1</address>\n                 <port>10022</port>\n                 <authgroup>default</authgroup>\n                 <device-type>\n                   <cli>\n                     <ned-id xmlns:cisco-ios-cli-3.8=\"http://tail-f.com/ns/ned-id/cisco-ios-cli-3.8\">cisco-ios-cli-3.8:cisco-ios-cli-3.8</ned-id>\n                   </cli>\n                 </device-type>\n                 <state>\n                   <admin-state>unlocked</admin-state>\n                 </state>\n               </device>"
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SSH Fetch-Host-Keys Device",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/ssh/fetch-host-keys",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"ssh",
+										"fetch-host-keys"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sync-from Device",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/sync-from",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"sync-from"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a device from CDB Device List",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "View Device Config",
+					"item": [
+						{
+							"name": "All Devices: Show Running-config Devices Device",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/yang-data+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single Device Config - Show devices device netsim-ios-0",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show interfaces",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/config/tailf-ned-cisco-ios:interface/",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"config",
+										"tailf-ned-cisco-ios:interface",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show interface eth 0/0",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/yang-data+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/config/tailf-ned-cisco-ios:interface/FastEthernet=0%2F0",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"config",
+										"tailf-ned-cisco-ios:interface",
+										"FastEthernet=0%2F0"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5e956a51-2fab-45e7-b280-3d6cb66419fe",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "607d7f46-c650-440d-8e73-d0d4a1af5be0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Change Device Config",
+					"item": [
+						{
+							"name": "add ip address to interface",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/yang-data+json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/yang-data+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n                       <ip>\n                         <address>\n                           <primary>\n                             <address>10.0.0.5</address>\n                             <mask>255.255.255.255</mask>\n                           </primary>\n                         </address>\n                       </ip>\n"
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/config/tailf-ned-cisco-ios:interface/FastEthernet=0%2F0/ip",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"config",
+										"tailf-ned-cisco-ios:interface",
+										"FastEthernet=0%2F0",
+										"ip"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Commit Dry-run outformat native",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/yang-data+json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/yang-data+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n                       <ip>\n                         <address>\n                           <primary>\n                             <address>10.0.2.5</address>\n                             <mask>255.255.255.252</mask>\n                           </primary>\n                         </address>\n                       </ip>\n"
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/config/tailf-ned-cisco-ios:interface/FastEthernet=0%2F0/ip?dry-run=native",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"config",
+										"tailf-ned-cisco-ios:interface",
+										"FastEthernet=0%2F0",
+										"ip"
+									],
+									"query": [
+										{
+											"key": "dry-run",
+											"value": "native"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dry Run Reverse: Getting back to current state if commit success",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/yang-data+json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/yang-data+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n                       <ip>\n                         <address>\n                           <primary>\n                             <address>10.0.2.5</address>\n                             <mask>255.255.255.252</mask>\n                           </primary>\n                         </address>\n                       </ip>\n"
+								},
+								"url": {
+									"raw": "http://{{NSO_IP}}:{{NSO_HTTP_PORT}}/restconf/data/tailf-ncs:devices/device=netsim-ios-0/config/tailf-ned-cisco-ios:interface/FastEthernet=0%2F0/ip?dry-run-reverse=native&dry-run=native",
+									"protocol": "http",
+									"host": [
+										"{{NSO_IP}}"
+									],
+									"port": "{{NSO_HTTP_PORT}}",
+									"path": [
+										"restconf",
+										"data",
+										"tailf-ncs:devices",
+										"device=netsim-ios-0",
+										"config",
+										"tailf-ned-cisco-ios:interface",
+										"FastEthernet=0%2F0",
+										"ip"
+									],
+									"query": [
+										{
+											"key": "dry-run-reverse",
+											"value": "native"
+										},
+										{
+											"key": "dry-run",
+											"value": "native"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "note the key for show interface with 0/0 replace / with 0%2F0",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e39f3ed-5973-4d51-b8b4-56dc4f447a96",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9974e4dd-02e7-46c2-85f3-13a346a247ad",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c341ed19-456c-4575-b39e-d6e277b9fc5f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "71ee941e-1cd7-4fdc-ab8b-9b1629f40333",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "25a20ec4-10eb-471a-8497-916550229e66",
+			"key": "NSO_IP",
+			"value": "127.0.0.1",
+			"type": "string"
+		},
+		{
+			"id": "f1d4f3ac-0a6c-4c6f-9c4e-f60d138f6f5d",
+			"key": "NSO_HTTP_PORT",
+			"value": "8009",
+			"type": "string"
+		}
+	]
+}
