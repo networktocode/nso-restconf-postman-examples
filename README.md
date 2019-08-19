@@ -9,7 +9,7 @@ First off, the NSO BU recommends using the RESTCONF API instead of the REST API.
 
 ## My Demo Setup
 
-I am using the [NSO Vagrant](https://github.com/NSO-developer/nso-vagrant) local install NSO, with NSO version `5.1.0.1` on Ubuntu, from my Macbook Pro  OS X `10.14.5`. The Vagrant File sets up a few netsims with the non-production dummy NEDs (`cisco-ios-cli-3.8` rather than `cisco-ios`) which come for free with the NSO install. I will use these NEDs for the example, but remmeber they should not be used on real devices. 
+I am using the [NSO Vagrant](https://github.com/NSO-developer/nso-vagrant) local install NSO, with NSO version `5.1.0.1` on Ubuntu, from my Macbook Pro  OS X `10.14.5`. The Vagrant File sets up a few netsims with the non-production dummy NEDs (`cisco-ios-cli-3.8` rather than `cisco-ios`) which come for free with the NSO install. I will use these NEDs for the example, but remember they should not be used on real devices. 
 
 I am using Postman Version 6.7.4 on my laptop on the OS X side, running it against the port exposed from the virtual machine. You will need to import the collection, and may need to change the `NSO IP` and `Port`. The default port for NSO is `8080`, but since I am using vagrant it is saved as `8009` in the collection. 
 
@@ -18,12 +18,12 @@ I am using Postman Version 6.7.4 on my laptop on the OS X side, running it again
 
 I created a Postman collection, which is an organized set of RESTCONF API calls to your NSO server. You can learn how to import the collection [here](https://learning.getpostman.com/docs/postman/collections/data_formats/#importing-postman-data). The collection is in this repository called `NSO RESTCONF NORTHBOUND API.postman_collection.json`. 
 
-Once you import the collection, you may want to change the collection variables I made for the `NSO IP` and `Port`. I used localhost and the vagrant port for my set up, if you are not running on vagrant you should likely update the port to `8080`. ]See instructions here for changing collection variables](https://learning.getpostman.com/docs/postman/environments_and_globals/variables#defining-collection-variables).
+Once you import the collection, you may want to change the collection variables I made for the `NSO IP` and `Port`. I used localhost and the vagrant port for my set up, if you are not running on vagrant you should likely update the port to `8080`. [See instructions here for changing collection variables](https://learning.getpostman.com/docs/postman/environments_and_globals/variables#defining-collection-variables).
 
 
 ### Ports and Vagrant
-If you are using vagrant, check what ports are mapped for the HTTP API (usually 8080) so your rest call path can be correct:
-for example:
+If you are using vagrant, check what ports are mapped for the HTTP API (usually 8080) so your REST call path can be correct.
+For example:
 ```
 admin@ncs# exit
 vagrant@vagrant:nso-run$ exit
